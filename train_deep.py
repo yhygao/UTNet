@@ -208,6 +208,11 @@ def cal_distance(label_pred, label_true, spacing):
 
 if __name__ == '__main__':
     parser = OptionParser()
+    def get_comma_separated_int_args(option, opt, value, parser):
+        value_list = value.split(',')
+        value_list = [int(i) for i in value_list]
+        setattr(parser.values, option.dest, value_list)
+
     parser.add_option('-e', '--epochs', dest='epochs', default=150, type='int', help='number of epochs')
     parser.add_option('-b', '--batch_size', dest='batch_size', default=32, type='int', help='batch size')
     parser.add_option('-l', '--learning-rate', dest='lr', default=0.05, type='float', help='learning rate')
@@ -229,7 +234,7 @@ if __name__ == '__main__':
     parser.add_option('--aux_weight', type='float', dest='aux_weight', default=[1, 0.4, 0.2, 0.1])
     parser.add_option('--reduce_size', dest='reduce_size', default=8, type='int')
     parser.add_option('--block_list', dest='block_list', default='1234', type='str')
-    parser.add_option('--num_blocks', dest='num_blocks', default=[1,1,1,1], type='int')
+    parser.add_option('--num_blocks', dest='num_blocks', default=[1,1,1,1], type='string', action='callback', callback=get_comma_separated_int_args)
     parser.add_option('--aux_loss', dest='aux_loss', action='store_true', help='using aux loss for deep supervision')
 
     
@@ -248,7 +253,6 @@ if __name__ == '__main__':
 
     else:
         raise NotImplementedError(options.model + " has not been implemented")
-
     if options.load:
         net.load_state_dict(torch.load(options.load))
         print('Model loaded from {}'.format(options.load))

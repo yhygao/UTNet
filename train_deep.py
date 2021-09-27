@@ -9,7 +9,6 @@ from model.utnet import UTNet, UTNet_Encoderonly
 from dataset_domain import CMRDataset
 
 from torch.utils import data
-import torchvision
 from losses import DiceLoss
 from utils.utils import *
 from utils import metrics
@@ -222,6 +221,8 @@ if __name__ == '__main__':
 
     parser.add_option('-o', '--log-path', type='str', dest='log_path', default='./log/', help='log path')
     parser.add_option('-m', type='str', dest='model', default='UTNet', help='use which model')
+    parser.add_option('--num_class', type='int', dest='num_class', default=4, help='number of segmentation classes')
+    parser.add_option('--base_chan', type='int', dest='base_chan', default=32, help='number of channels of first expansion in UNet')
     parser.add_option('-u', '--unique_name', type='str', dest='unique_name', default='test', help='unique experiment name')
     parser.add_option('--rlt', type='float', dest='rlt', default=1, help='relation between CE/FL and dice')
     parser.add_option('--weight', type='float', dest='weight',
@@ -246,9 +247,10 @@ if __name__ == '__main__':
     print('Using model:', options.model)
 
     if options.model == 'UTNet':
-        net = UTNet(1, 32, 4, reduce_size=options.reduce_size, block_list=options.block_list, num_blocks=options.num_blocks, num_heads=[4,4,4,4], projection='interp', attn_drop=0.1, proj_drop=0.1, rel_pos=True, aux_loss=options.aux_loss, maxpool=True)
+        net = UTNet(1, options.base_chan, options.num_class, reduce_size=options.reduce_size, block_list=options.block_list, num_blocks=options.num_blocks, num_heads=[4,4,4,4], projection='interp', attn_drop=0.1, proj_drop=0.1, rel_pos=True, aux_loss=options.aux_loss, maxpool=True)
     elif options.model == 'UTNet_encoder':
-        net = UTNet_Encoderonly(1, 32, 4, reduce_size=options.reduce_size, block_list=options.block_list, num_blocks=options.num_blocks, num_heads=[4,4,4,4], projection='interp', attn_drop=0.1, proj_drop=0.1, rel_pos=True, aux_loss=options.aux_loss, maxpool=True)
+        # Apply transformer blocks only in the encoder
+        net = UTNet_Encoderonly(1, options.base_chan, options.num_class, reduce_size=options.reduce_size, block_list=options.block_list, num_blocks=options.num_blocks, num_heads=[4,4,4,4], projection='interp', attn_drop=0.1, proj_drop=0.1, rel_pos=True, aux_loss=options.aux_loss, maxpool=True)
 
 
     else:

@@ -211,18 +211,3 @@ class CMRDataset(Dataset):
         return img, label
 
 
-if __name__ == '__main__':
-    import matplotlib.pyplot as plt
-
-    data_path = './dataset/'
-
-    dataset = BrainDataset(data_path, mode='train', flag=5)
-    dataloader = DataLoader(dataset, batch_size=1, shuffle=True)
-
-    for i, (img, label) in enumerate(dataloader):
-        print(i, img.shape, label.shape)
-        plt.subplot(1, 2, 1)
-        plt.imshow(img[0, 0, :, :].cpu().numpy())
-        plt.subplot(1, 2, 2)
-        plt.imshow(label[0, 0, :, :].cpu().numpy())
-        plt.show()

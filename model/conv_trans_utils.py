@@ -344,6 +344,7 @@ class RelativePositionEmbedding(nn.Module):
 class RelativePositionBias(nn.Module):
     # input-independent relative position attention
     # As the number of parameters is smaller, so use 2D here
+    # Borrowed some code from SwinTransformer: https://github.com/microsoft/Swin-Transformer/blob/main/models/swin_transformer.py
     def __init__(self, num_heads, h, w):
         super().__init__()
         self.num_heads = num_heads

@@ -57,6 +57,8 @@ To optimize UTNet in your own task, there are several hyperparameters to tune:
 
 '--reduce_size': indicates the size of downsampling for efficient attention. In our experiments, reduce_size 8 and 16 don't have much difference, but 16 will introduce more computation, so we choost 8 as our default setting. 16 might have better performance in other applications.
 
+'--aux_loss': applies deep supervision in training, will introduce some computation overhead but has slightly better performance.
+
 Here are some recomended parameter setting:
 ```
 --block_list 1234 --num_blocks 1,1,1,1

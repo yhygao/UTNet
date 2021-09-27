@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*_bkp.py
+checkpoint/
+log/
+model/backup/
+initmodel/
+*.swp

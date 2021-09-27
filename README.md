@@ -61,20 +61,20 @@ Here are some recomended parameter setting:
 ```
 --block_list 1234 --num_blocks 1,1,1,1
 ```
-Our default setting, most efficient setting. Suitable for tasks with limited training data, and most error occurs in the boundary of ROI where high resolution information is important.
+Our default setting, most efficient setting. Suitable for tasks with limited training data, and most errors occur in the boundary of ROI where high resolution information is important.
 
 ```
 --block_list 1234 --num_blocks 1,1,4,8
 ```
-Similar to the previous one, but with larger model. The model capacity is larger as more transformer blocks are including, but needs larger dataset for training.
+Similar to the previous one. The model capacity is larger as more transformer blocks are including, but needs larger dataset for training.
 
 ```
---block_list 234 --num_block 2,4,8
+--block_list 234 --num_blocks 2,4,8
 ```
 Suitable for tasks that has complex contexts and errors occurs inside ROI. More transformer blocks can help learn higher-level relationship.
 
 
-Feel free to try other combinations of the hyperparameter like base_chan, reduce_size and etc. to trade off between capacity and efficiency to fit your own tasks and datasets.
+Feel free to try other combinations of the hyperparameter like base_chan, reduce_size and num_blocks in each level etc. to trade off between capacity and efficiency to fit your own tasks and datasets.
 
 
 ## Citation

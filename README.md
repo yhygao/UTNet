@@ -6,18 +6,15 @@ Official implementation of UTNet: A Hybrid Transformer Architecture for Medical 
 Transformer architecture has emerged to be successful in a
 number of natural language processing tasks. However, its applications
 to medical vision remain largely unexplored. In this study, we present
-UTNet, a simple yet powerful hybrid Transformer architecture that in-
-tegrates self-attention into a convolutional neural network for enhancing
+UTNet, a simple yet powerful hybrid Transformer architecture that integrates self-attention into a convolutional neural network for enhancing
 medical image segmentation. UTNet applies self-attention modules in
 both encoder and decoder for capturing long-range dependency at dif-
 ferent scales with minimal overhead. To this end, we propose an efficient
-self-attention mechanism along with relative position encoding that re-
-duces the complexity of self-attention operation significantly from O(n2)
+self-attention mechanism along with relative position encoding that reduces the complexity of self-attention operation significantly from O(n2)
 to approximate O(n). A new self-attention decoder is also proposed to
 recover fine-grained details from the skipped connections in the encoder.
 Our approach addresses the dilemma that Transformer requires huge
-amounts of data to learn vision inductive bias. Our hybrid layer de-
-sign allows the initialization of Transformer into convolutional networks
+amounts of data to learn vision inductive bias. Our hybrid layer design allows the initialization of Transformer into convolutional networks
 without a need of pre-training. We have evaluated UTNet on the multi-
 label, multi-vendor cardiac magnetic resonance imaging cohort. UTNet
 demonstrates superior segmentation performance and robustness against

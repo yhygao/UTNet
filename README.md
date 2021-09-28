@@ -52,6 +52,8 @@ Resample all data to spacing of 1.2x1.2 mm in x-y plane. We don't change the spa
 
 ### Training
 
+The M&M dataset provides data from 4 venders, where vendor AB are provided for training while ABCD for testing. The '--domain' is used to control using which vendor for training. '--domain A' for using vender A only. '--domain B' for using vender B only. '--domain AB' for using both vender A and B. For testing, all 4 venders will be used.
+
 #### UTNet
 For default UTNet setting, training with:
 ```

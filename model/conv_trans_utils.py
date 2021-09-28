@@ -380,7 +380,7 @@ class RelativePositionBias(nn.Module):
 
 
 ###########################################################################
-# Unet building block
+# Unet Transformer building block
 
 class down_block_trans(nn.Module):
     def __init__(self, in_ch, out_ch, num_block, bottleneck=False, maxpool=True, heads=4, dim_head=64, attn_drop=0., proj_drop=0., reduce_size=16, projection='interp', rel_pos=True):
@@ -441,6 +441,28 @@ class up_block_trans(nn.Module):
         out = self.attn_decoder(x1, x2)
         out = torch.cat([out, x2], dim=1)
         out = self.blocks(out)
+
+        return out
+
+class block_trans(nn.Module):
+    def __init__(self, in_ch, num_block, heads=4, dim_head=64, attn_drop=0., proj_drop=0., reduce_size=16, projection='interp', rel_pos=True):
+
+        super().__init__()
+
+        block_list = []
+
+        attn_block = BasicTransBlock
+
+        assert num_block > 0
+        for i in range(num_block):
+            block_list.append(attn_block(in_ch, heads, dim_head, attn_drop=attn_drop, proj_drop=proj_drop, reduce_size=reduce_size, projection=projection, rel_pos=rel_pos))
+        self.blocks = nn.Sequential(*block_list)
+
+        
+    def forward(self, x):
+        
+        out = self.blocks(x)
+
 
         return out
 

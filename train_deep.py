@@ -251,6 +251,19 @@ if __name__ == '__main__':
     elif options.model == 'UTNet_encoder':
         # Apply transformer blocks only in the encoder
         net = UTNet_Encoderonly(1, options.base_chan, options.num_class, reduce_size=options.reduce_size, block_list=options.block_list, num_blocks=options.num_blocks, num_heads=[4,4,4,4], projection='interp', attn_drop=0.1, proj_drop=0.1, rel_pos=True, aux_loss=options.aux_loss, maxpool=True)
+    elif options.model =='TransUNet':
+        from model.transunet import VisionTransformer as ViT_seg
+        from model.transunet import CONFIGS as CONFIGS_ViT_seg
+        config_vit = CONFIGS_ViT_seg['R50-ViT-B_16']
+        config_vit.n_classes = 4 
+        config_vit.n_skip = 3 
+        config_vit.patches.grid = (int(256/16), int(256/16))
+        net = ViT_seg(config_vit, img_size=256, num_classes=4)
+        #net.load_from(weights=np.load('./initmodel/R50+ViT-B_16.npz')) # uncomment this to use pretrain model download from TransUnet git repo
+
+    elif options.model == 'ResNet_UTNet':
+        from model.resnet_utnet import ResNet_UTNet
+        net = ResNet_UTNet(1, options.num_class, reduce_size=options.reduce_size, block_list=options.block_list, num_blocks=options.num_blocks, num_heads=[4,4,4,4], projection='interp', attn_drop=0.1, proj_drop=0.1, rel_pos=True)
 
 
     else:

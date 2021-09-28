@@ -29,16 +29,16 @@ def train_net(net, options):
     
     data_path = options.data_path
 
-    trainset = CMRDataset(data_path, mode='train', domain=options.domain, debug=DEBUG, scale=options.scale, rotate=options.rotate)
+    trainset = CMRDataset(data_path, mode='train', domain=options.domain, debug=DEBUG, scale=options.scale, rotate=options.rotate, crop_size=options.crop_size)
     trainLoader = data.DataLoader(trainset, batch_size=options.batch_size, shuffle=True, num_workers=16)
 
-    testset_A = CMRDataset(data_path, mode='test', domain='A', debug=DEBUG)
+    testset_A = CMRDataset(data_path, mode='test', domain='A', debug=DEBUG, crop_size=options.crop_size)
     testLoader_A = data.DataLoader(testset_A, batch_size=1, shuffle=False, num_workers=2)
-    testset_B = CMRDataset(data_path, mode='test', domain='B', debug=DEBUG)
+    testset_B = CMRDataset(data_path, mode='test', domain='B', debug=DEBUG, crop_size=options.crop_size)
     testLoader_B = data.DataLoader(testset_B, batch_size=1, shuffle=False, num_workers=2)
-    testset_C = CMRDataset(data_path, mode='test', domain='C', debug=DEBUG)
+    testset_C = CMRDataset(data_path, mode='test', domain='C', debug=DEBUG, crop_size=options.crop_size)
     testLoader_C = data.DataLoader(testset_C, batch_size=1, shuffle=False, num_workers=2)
-    testset_D = CMRDataset(data_path, mode='test', domain='D', debug=DEBUG)
+    testset_D = CMRDataset(data_path, mode='test', domain='D', debug=DEBUG, crop_size=options.crop_size)
     testLoader_D = data.DataLoader(testset_D, batch_size=1, shuffle=False, num_workers=2)
 
 
@@ -231,6 +231,7 @@ if __name__ == '__main__':
                       default=0.0001)
     parser.add_option('--scale', type='float', dest='scale', default=0.30)
     parser.add_option('--rotate', type='float', dest='rotate', default=180)
+    parser.add_option('--crop_size', type='int', dest='crop_size', default=256)
     parser.add_option('--domain', type='str', dest='domain', default='A')
     parser.add_option('--aux_weight', type='float', dest='aux_weight', default=[1, 0.4, 0.2, 0.1])
     parser.add_option('--reduce_size', dest='reduce_size', default=8, type='int')
@@ -264,6 +265,12 @@ if __name__ == '__main__':
     elif options.model == 'ResNet_UTNet':
         from model.resnet_utnet import ResNet_UTNet
         net = ResNet_UTNet(1, options.num_class, reduce_size=options.reduce_size, block_list=options.block_list, num_blocks=options.num_blocks, num_heads=[4,4,4,4], projection='interp', attn_drop=0.1, proj_drop=0.1, rel_pos=True)
+    
+    elif options.model == 'SwinUNet':
+        from model.swin_unet import SwinUnet, SwinUnet_config
+        config = SwinUnet_config()
+        net = SwinUnet(config, img_size=224, num_classes=options.num_class)
+        net.load_from('./initmodel/swin_tiny_patch4_window7_224.pth')
 
 
     else:

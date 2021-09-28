@@ -49,8 +49,8 @@ class ResNet_UTNet(nn.Module):
         self.output = nn.Conv2d(64, num_class, kernel_size=3, padding=1, bias=True)
 
     def forward(self, x):
-        
-        x = x.repeat(1, 3, 1, 1)
+        if x.shape[1] == 1: 
+            x = x.repeat(1, 3, 1, 1)
         x, features = self.resnet(x)
 
         out3 = self.trans_3(x)

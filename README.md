@@ -33,6 +33,8 @@ ResNet50-UTNet
 
 ResNet50-UNet
 
+SwinUNet
+
 To be continue ...
 
 ## Getting Started
@@ -89,7 +91,7 @@ Suitable for tasks that has complex contexts and errors occurs inside ROI. More 
 Feel free to try other combinations of the hyperparameter like base_chan, reduce_size and num_blocks in each level etc. to trade off between capacity and efficiency to fit your own tasks and datasets.
 
 #### TransUNet
-We borrow code from the original TransUNet repo and fit it into our training framework. The configuration is not parsed by command line, so if you want change the configuration of TransUNet, you need change it inside the train_deep.py.
+We borrow code from the original TransUNet repo and fit it into our training framework. If you want to use pre-trained weight, please download from the [original repo](https://github.com/Beckschen/TransUNet). The configuration is not parsed by command line, so if you want change the configuration of TransUNet, you need change it inside the train_deep.py.
 ```
 python train_deep.py -m TransUNet -u EXP_NAME --data_path YOUR_OWN_PATH --gpu 0
 ```
@@ -111,6 +113,13 @@ If you don't use Transformer blocks in ResNet50-UTNet, it is actually ResNet50-U
 
 ```
 python train_deep.py -m ResNet_UTNet -u EXP_NAME --data_path YOUR_OWN_PATH --block_list ''  --gpu 0
+```
+
+#### SwinUNet
+Download pre-trained model from the [origin repo](https://github.com/HuCaoFighting/Swin-Unet/tree/4375a8d6fa7d9c38184c5d3194db990a00a3e912).
+As Swin-Transformer's input size is related to window size and is hard to change after pretraining, so we adapt our input size to 224. Without pre-training, SwinUNet's performance is very low.
+```
+python train_deep.py -m SwinUNet -u EXP_NAME --data_path YOUR_OWN_PATH --crop_size 224
 ```
 
 ## Citation

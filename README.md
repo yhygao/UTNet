@@ -57,7 +57,7 @@ The M&M dataset provides data from 4 venders, where vendor AB are provided for t
 #### UTNet
 For default UTNet setting, training with:
 ```
-python train_deep.py -m UTNet -u EXP_NAME --data_path YOUR_OWN_PATH --reduce_size 8 --block_list 1234 --num_blocks 1,1,1,1 --gpu 0 --aux_loss
+python train_deep.py -m UTNet -u EXP_NAME --data_path YOUR_OWN_PATH --reduce_size 8 --block_list 1234 --num_blocks 1,1,1,1 --domain AB --gpu 0 --aux_loss
 ```
 To optimize UTNet in your own task, there are several hyperparameters to tune:
 

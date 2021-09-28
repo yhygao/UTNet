@@ -27,6 +27,16 @@ other medical image segmentations.
 ![image](https://user-images.githubusercontent.com/55367673/134997310-69c3576d-bbf2-40c8-ad5a-9b3bf3e9e97d.png)
 ![image](https://user-images.githubusercontent.com/55367673/134997347-a581cda7-7050-48ef-9af3-d4628fefac9a.png)
 
+## Supportting models
+UTNet
+
+TransUNet
+
+ResNet50-UTNet
+
+ResNet50-UNet
+
+To be continue ...
 
 ## Getting Started
 ### Prerequisites
@@ -45,6 +55,7 @@ Resample all data to spacing of 1.2x1.2 mm in x-y plane. We don't change the spa
 
 ### Training
 
+#### UTNet
 For default UTNet setting, training with:
 ```
 python train_deep.py -m UTNet -u EXP_NAME --data_path YOUR_OWN_PATH --reduce_size 8 --block_list 1234 --num_blocks 1,1,1,1 --gpu 0 --aux_loss
@@ -78,8 +89,33 @@ Suitable for tasks that has complex contexts and errors occurs inside ROI. More 
 
 Feel free to try other combinations of the hyperparameter like base_chan, reduce_size and num_blocks in each level etc. to trade off between capacity and efficiency to fit your own tasks and datasets.
 
+#### TransUNet
+We borrow code from the original TransUNet repo and fit it into our training framework. The configuration is not parsed by command line, so if you want change the configuration of TransUNet, you need change it inside the train_deep.py.
+```
+python train_deep.py -m TransUNet -u EXP_NAME --data_path YOUR_OWN_PATH --gpu 0
+```
+
+#### ResNet50-UTNet
+For fair comparison with TransUNet, we implement the efficient attention proposed in UTNet into ResNet50 backbone, which is basically append transformer blocks into specified level after ResNet blocks.
+```
+python train_deep.py -m ResNet_UTNet -u EXP_NAME --data_path YOUR_OWN_PATH --reduce_size 8 --block_list 123 --num_blocks 1,1,1 --gpu 0
+```
+Similar to UTNet, this is the most efficient setting, suitable for tasks with limited training data.
+```
+--block_list 23 --num_blocks 2,4
+```
+Suitable for tasks that has complex contexts and errors occurs inside ROI. More transformer blocks can help learn higher-level relationship.
+
+
+#### ResNet50-UNet
+If you don't use Transformer blocks in ResNet50-UTNet, it is actually ResNet50-UNet. So you can use this as the baseline to compare the performance improvement from Transformer for fair comparision with TransUNet and our UTNet.
+
+```
+python train_deep.py -m ResNet_UTNet -u EXP_NAME --data_path YOUR_OWN_PATH --block_list ''  --gpu 0
+```
 
 ## Citation
+If you find this repo helps, please kindly cite our paper, thanks!
 ```
 @inproceedings{gao2021utnet,
   title={UTNet: a hybrid transformer architecture for medical image segmentation},

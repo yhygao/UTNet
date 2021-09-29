@@ -1,5 +1,5 @@
 # UTNet
-Official implementation of UTNet: A Hybrid Transformer Architecture for Medical Image Segmentation
+Official implementation of [UTNet: A Hybrid Transformer Architecture for Medical Image Segmentation](https://arxiv.org/abs/2107.00781)
 
 ## Introduction 
 
@@ -38,6 +38,9 @@ SwinUNet
 To be continue ...
 
 ## Getting Started
+
+Currently, we only support [M&Ms dataset](https://www.ub.edu/mnms/).
+
 ### Prerequisites
 ```
 Python >= 3.6
@@ -48,7 +51,6 @@ einops = 0.3.2
 ```
 
 ### Preprocess
-Currently, we only support [M&Ms dataset](https://www.ub.edu/mnms/).
 
 Resample all data to spacing of 1.2x1.2 mm in x-y plane. We don't change the spacing of z-axis, as UTNet is a 2D network. Then put all data into 'dataset/'
 

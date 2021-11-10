@@ -1,7 +1,7 @@
-# UTNet
+# UTNet (Accepted at MICCAI 2021)
 Official implementation of [UTNet: A Hybrid Transformer Architecture for Medical Image Segmentation](https://arxiv.org/abs/2107.00781)
 
-Accepted at MICCAI 2021
+
 
 ## Introduction 
 

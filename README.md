@@ -3,7 +3,7 @@ Official implementation of [UTNet: A Hybrid Transformer Architecture for Medical
 
 
 ## Update
-Our new paper, the improved version of UTNet: UTNetV2, is released on Arxiv: [A Multi-scale Transformer for Medical Image Segmentation: Architectures, Model Efficiency, and Benchmarks](https://arxiv.org/abs/2203.00131). The UTNetV2 has an improved architecture for 2D and 3D setting. We also provide a more general framework for CNN and Transformer comparison, see in our new repo：https://github.com/yhygao/CBIM-Medical-Image-Segmentation
+Our new paper, the improved version of UTNet: UTNetV2, is released on Arxiv: [A Multi-scale Transformer for Medical Image Segmentation: Architectures, Model Efficiency, and Benchmarks](https://arxiv.org/abs/2203.00131). The UTNetV2 has an improved architecture for 2D and 3D setting. We also provide a more general framework for CNN and Transformer comparison, including more dataset support, more SOTA model support, see in our new repo：https://github.com/yhygao/CBIM-Medical-Image-Segmentation
 
 Data preprocess code uploaded.
 
